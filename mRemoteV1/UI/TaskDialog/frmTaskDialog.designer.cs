@@ -284,7 +284,7 @@ namespace mRemoteNG.UI.TaskDialog
             // frmTaskDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(444, 459);
             this.Controls.Add(this.pnlFooter);
             this.Controls.Add(this.pnlButtons);

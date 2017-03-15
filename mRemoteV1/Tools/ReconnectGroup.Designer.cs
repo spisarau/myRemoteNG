@@ -113,7 +113,7 @@ namespace mRemoteNG.Tools
 			//ReconnectGroup
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF((float) (6.0F), (float) (13.0F));
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.White;
 			this.Controls.Add(this.grpAutomaticReconnect);
 			this.Name = "ReconnectGroup";

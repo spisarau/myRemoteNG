@@ -163,7 +163,7 @@ namespace mRemoteNG.UI.Forms.OptionsPages
 			//SqlServerPage
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF((float) (6.0F), (float) (13.0F));
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.Controls.Add(this.lblSQLDatabaseName);
 			this.Controls.Add(this.txtSQLDatabaseName);
 			this.Controls.Add(this.lblExperimental);

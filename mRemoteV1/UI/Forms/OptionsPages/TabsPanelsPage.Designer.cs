@@ -113,7 +113,7 @@ namespace mRemoteNG.UI.Forms.OptionsPages
             // TabsPanelsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.chkAlwaysShowPanelTabs);
             this.Controls.Add(this.chkIdentifyQuickConnectTabs);
             this.Controls.Add(this.chkOpenNewTabRightOfSelected);

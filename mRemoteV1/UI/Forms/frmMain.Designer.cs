@@ -36,7 +36,6 @@ namespace mRemoteNG.UI.Forms
             this.mMenSep3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsContainer = new System.Windows.Forms.ToolStripContainer();
             this.tmrAutoSave = new System.Windows.Forms.Timer(this.components);
-            this.msMain.SuspendLayout();
             this.tsContainer.ContentPanel.SuspendLayout();
             this.tsContainer.TopToolStripPanel.SuspendLayout();
             this.tsContainer.SuspendLayout();
@@ -50,8 +49,9 @@ namespace mRemoteNG.UI.Forms
             this.pnlDock.DockRightPortion = 230D;
             this.pnlDock.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingSdi;
             this.pnlDock.Location = new System.Drawing.Point(0, 0);
+            this.pnlDock.Margin = new System.Windows.Forms.Padding(60, 28, 60, 28);
             this.pnlDock.Name = "pnlDock";
-            this.pnlDock.Size = new System.Drawing.Size(966, 449);
+            this.pnlDock.Size = new System.Drawing.Size(1906, 1013);
             this.pnlDock.TabIndex = 13;
             this.pnlDock.ActiveDocumentChanged += new System.EventHandler(this.pnlDock_ActiveDocumentChanged);
             // 
@@ -59,13 +59,34 @@ namespace mRemoteNG.UI.Forms
             // 
             this.msMain.Dock = System.Windows.Forms.DockStyle.None;
             this.msMain.GripMargin = new System.Windows.Forms.Padding(0);
+            this.msMain.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.msMain.Location = new System.Drawing.Point(3, 0);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.msMain.Size = new System.Drawing.Size(269, 24);
+            this.msMain.Size = new System.Drawing.Size(202, 24);
             this.msMain.Stretch = false;
             this.msMain.TabIndex = 16;
             this.msMain.Text = "Main Toolbar";
+            // 
+            // mMenFile
+            // 
+            this.mMenFile.Name = "mMenFile";
+            this.mMenFile.Size = new System.Drawing.Size(32, 19);
+            // 
+            // mMenView
+            // 
+            this.mMenView.Name = "mMenView";
+            this.mMenView.Size = new System.Drawing.Size(32, 19);
+            // 
+            // mMenTools
+            // 
+            this.mMenTools.Name = "mMenTools";
+            this.mMenTools.Size = new System.Drawing.Size(32, 19);
+            // 
+            // mMenInfo
+            // 
+            this.mMenInfo.Name = "mMenInfo";
+            this.mMenInfo.Size = new System.Drawing.Size(32, 19);
             // 
             // mMenSep3
             // 
@@ -78,11 +99,13 @@ namespace mRemoteNG.UI.Forms
             // tsContainer.ContentPanel
             // 
             this.tsContainer.ContentPanel.Controls.Add(this.pnlDock);
-            this.tsContainer.ContentPanel.Size = new System.Drawing.Size(966, 449);
+            this.tsContainer.ContentPanel.Margin = new System.Windows.Forms.Padding(60, 28, 60, 28);
+            this.tsContainer.ContentPanel.Size = new System.Drawing.Size(1906, 1013);
             this.tsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tsContainer.Location = new System.Drawing.Point(0, 0);
+            this.tsContainer.Margin = new System.Windows.Forms.Padding(60, 28, 60, 28);
             this.tsContainer.Name = "tsContainer";
-            this.tsContainer.Size = new System.Drawing.Size(966, 523);
+            this.tsContainer.Size = new System.Drawing.Size(1906, 1037);
             this.tsContainer.TabIndex = 17;
             this.tsContainer.Text = "ToolStripContainer1";
             // 
@@ -95,14 +118,16 @@ namespace mRemoteNG.UI.Forms
             this.tmrAutoSave.Interval = 10000;
             this.tmrAutoSave.Tick += new System.EventHandler(this.tmrAutoSave_Tick);
             // 
-            // frmMain
+            // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(966, 523);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(1906, 1037);
             this.Controls.Add(this.tsContainer);
+            this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = global::mRemoteNG.Resources.mRemote_Icon;
             this.MainMenuStrip = this.msMain;
+            this.Margin = new System.Windows.Forms.Padding(60, 28, 60, 28);
             this.Name = "FrmMain";
             this.Opacity = 0D;
             this.Text = "mRemoteNG";
@@ -112,8 +137,6 @@ namespace mRemoteNG.UI.Forms
             this.ResizeBegin += new System.EventHandler(this.frmMain_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frmMain_ResizeEnd);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
-            this.msMain.ResumeLayout(false);
-            this.msMain.PerformLayout();
             this.tsContainer.ContentPanel.ResumeLayout(false);
             this.tsContainer.TopToolStripPanel.ResumeLayout(false);
             this.tsContainer.TopToolStripPanel.PerformLayout();

@@ -81,7 +81,7 @@ namespace mRemoteNG.UI.Forms.OptionsPages
 			//ThemePage
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF((float) (6.0F), (float) (13.0F));
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.Controls.Add(this.btnThemeDelete);
 			this.Controls.Add(this.btnThemeNew);
 			this.Controls.Add(this.cboTheme);
