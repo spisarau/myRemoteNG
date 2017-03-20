@@ -1,6 +1,7 @@
 using System;
 using mRemoteNG.App;
 using System.ComponentModel;
+using mRemoteNG.Messages;
 using mRemoteNG.Security;
 using mRemoteNG.Tools;
 using mRemoteNG.UI.Forms;
@@ -32,7 +33,15 @@ namespace mRemoteNG.Connection.Protocol.VNC
         #region Public Methods
 		public ProtocolVNC()
 		{
-			Control = new VncSharp.RemoteDesktop();
+		    try
+		    {
+                Control = new VncSharp.RemoteDesktop();
+            }
+		    catch (Exception e)
+		    {
+		        Runtime.MessageCollector.AddExceptionStackTrace("Failed to create VNC RemoteDesktop", e);
+		        throw;
+		    }
 		}
 				
 		public override bool Initialize()
@@ -51,7 +60,7 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncSetPropsFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncSetPropsFailed + Environment.NewLine + ex.Message, true);
 				return false;
 			}
 		}
@@ -66,22 +75,38 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncConnectionOpenFailed + Environment.NewLine + ex.Message);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncConnectionOpenFailed + Environment.NewLine + ex.Message);
 				return false;
 			}
 					
 			return true;
 		}
-				
-		public override void Disconnect()
+
+        /*
+	    public override void Close()
+	    {
+            try
+            {
+                Disconnect(); // Disconnect from VNC
+                base.Close(); // Close the tab
+            }
+            catch (Exception ex)
+            {
+                Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncConnectionDisconnectFailed + Environment.NewLine + ex.Message, true);
+            }
+        }
+        */
+
+        public override void Disconnect()
 		{
 			try
 			{
-				_VNC.Disconnect();
+                if (_VNC != null && _VNC.IsConnected)
+                    _VNC.Disconnect();
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncConnectionDisconnectFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncConnectionDisconnectFailed + Environment.NewLine + ex.Message, true);
 			}
 		}
 				
@@ -101,7 +126,7 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncSendSpecialKeysFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncSendSpecialKeysFailed + Environment.NewLine + ex.Message, true);
 			}
 		}
 				
@@ -114,7 +139,7 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncToggleSmartSizeFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncToggleSmartSizeFailed + Environment.NewLine + ex.Message, true);
 			}
 		}
 				
@@ -126,19 +151,19 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncToggleViewOnlyFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncToggleViewOnlyFailed + Environment.NewLine + ex.Message, true);
 			}
 		}
 				
 				
 		public void StartChat()
 		{
-		    throw (new NotImplementedException());
+		    throw new NotImplementedException();
 		}
 				
 		public void StartFileTransfer()
 		{
-            throw (new NotImplementedException());
+            throw new NotImplementedException();
         }
 				
 		public void RefreshScreen()
@@ -149,7 +174,7 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncRefreshFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncRefreshFailed + Environment.NewLine + ex.Message, true);
 			}
 		}
         #endregion
@@ -169,7 +194,7 @@ namespace mRemoteNG.Connection.Protocol.VNC
 			}
 			catch (Exception ex)
 			{
-				Runtime.MessageCollector.AddMessage(Messages.MessageClass.ErrorMsg, Language.strVncSetEventHandlersFailed + Environment.NewLine + ex.Message, true);
+				Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.strVncSetEventHandlersFailed + Environment.NewLine + ex.Message, true);
 			}
 		}
         #endregion
@@ -183,8 +208,10 @@ namespace mRemoteNG.Connection.Protocol.VNC
 				
 		private void VNCEvent_Disconnected(object sender, EventArgs e)
 		{
-			Event_Disconnected(sender, e.ToString());
-			Close();
+            // VncSharp appears to send an empty EventArgs object by default.
+			Event_Disconnected(this, e == EventArgs.Empty ? "Disconnected" : e.ToString() );
+		    Disconnect();
+            Close();
 		}
 				
 		private void VNCEvent_ClipboardChanged()
