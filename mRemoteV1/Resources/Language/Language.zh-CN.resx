@@ -1494,8 +1494,7 @@ VncSharp 版本 {0}</value>
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>协议事件：连接断开失败。
-{0}</value>
+    <value>协议事件：连接断开失败。</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>需要导入的协议</value>

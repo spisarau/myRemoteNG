@@ -5083,8 +5083,7 @@ namespace mRemoteNG {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Protocol Event Disconnected failed.
-        ///{0}.
+        ///   Looks up a localized string similar to Protocol Event Disconnected failed..
         /// </summary>
         internal static string strProtocolEventDisconnectFailed {
             get {

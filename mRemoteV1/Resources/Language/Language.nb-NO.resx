@@ -1508,8 +1508,7 @@ Melding:
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Protokollhendelse Frakoblet mislyktes.
-{0}</value>
+    <value>Protokollhendelse Frakoblet mislyktes.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Protokoll å importere</value>

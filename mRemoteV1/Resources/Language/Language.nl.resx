@@ -1509,8 +1509,7 @@ Bericht:
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Protocol Event verbinding verbreken mislukt.
-{0}</value>
+    <value>Protocol Event verbinding verbreken mislukt.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Protocol om te importeren</value>

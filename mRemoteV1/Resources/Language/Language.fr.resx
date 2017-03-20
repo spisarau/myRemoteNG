@@ -1491,7 +1491,7 @@ Message:
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Échec de Déconnexion du Protocole d’Évènement. {0}</value>
+    <value>Échec de Déconnexion du Protocole d’Évènement.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Protocole à importer</value>

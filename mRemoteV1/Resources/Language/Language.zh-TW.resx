@@ -1476,8 +1476,7 @@ VncSharp Control 版本 {0}</value>
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Protocol Event 中斷連線失敗。
-{0}</value>
+    <value>Protocol Event 中斷連線失敗。</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>匯入協定</value>

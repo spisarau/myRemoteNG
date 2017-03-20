@@ -1704,8 +1704,7 @@ Message:
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Protocol Event Disconnected failed.
-{0}</value>
+    <value>Protocol Event Disconnected failed.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>インポートするプロトコル</value>

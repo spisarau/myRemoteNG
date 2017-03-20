@@ -1849,8 +1849,7 @@ Mesaj:
 {0}</value>
 	</data>
 	<data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-		<value>Protokol Bağlantı kesme İşlemi Başarısız.
-{0}</value>
+		<value>Protokol Bağlantı kesme İşlemi Başarısız.</value>
 	</data>
 	<data name="strProtocolToImport" xml:space="preserve">
 		<value>İçe alma protokolü</value>

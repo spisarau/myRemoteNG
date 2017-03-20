@@ -1509,8 +1509,7 @@ Wenn Sie Fehler feststellen, dann sollten Sie eine neue Verbindungsdatei erstell
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Protokollereignis Verbindung trennen fehlgeschlagen.
-{0}</value>
+    <value>Protokollereignis Verbindung trennen fehlgeschlagen.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Zu importierendes Protokoll</value>

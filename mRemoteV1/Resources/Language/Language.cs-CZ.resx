@@ -1682,8 +1682,7 @@ Zpráva:
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Událost protokolu "Odpojeno" selhala.
-{0}</value>
+    <value>Událost protokolu "Odpojeno" selhala.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Protocol k importu</value>

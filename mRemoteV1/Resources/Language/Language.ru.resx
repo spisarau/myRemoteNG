@@ -1515,8 +1515,7 @@
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Протокол событий Отключение не удалось.
-{0}</value>
+    <value>Протокол событий Отключение не удалось.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Протокол импорта</value>

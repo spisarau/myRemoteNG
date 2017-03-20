@@ -1493,8 +1493,7 @@ Messaggio:
 {0}</value>
   </data>
   <data name="strProtocolEventDisconnectFailed" xml:space="preserve">
-    <value>Protocol Event Disconnected fallito.
-{0}</value>
+    <value>Protocol Event Disconnected fallito.</value>
   </data>
   <data name="strProtocolToImport" xml:space="preserve">
     <value>Protocollo da importare</value>
