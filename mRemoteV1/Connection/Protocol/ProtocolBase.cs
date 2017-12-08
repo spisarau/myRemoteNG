@@ -44,6 +44,7 @@ namespace mRemoteNG.Connection.Protocol
 			{
 				_interfaceControl = value;
                 // TODO: do something better here...
+                // TODO: Tests fail here...
                 // This is ugly
 				ConnectionWindow = _interfaceControl.Parent.Parent.Parent.Parent.Parent as UI.Window.ConnectionWindow;
 			}

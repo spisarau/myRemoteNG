@@ -28,8 +28,7 @@ namespace mRemoteNG.UI.Window
     {
         public TabControl TabController;
         private readonly IConnectionInitiator _connectionInitiator = new ConnectionInitiator();
-        private readonly FrmMain _frmMain = FrmMain.Default;
-        private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender vsToolStripExtender;
+        private VisualStudioToolStripExtender vsToolStripExtender;
         private readonly ToolStripRenderer _toolStripProfessionalRenderer = new ToolStripProfessionalRenderer();
 
         #region Public Methods
@@ -185,14 +184,12 @@ namespace mRemoteNG.UI.Window
 
         private new void ApplyTheme()
         {
-            if(ThemeManager.getInstance().ThemingActive)
-            {
-                base.ApplyTheme();
-                this.connDock.Theme = ThemeManager.getInstance().ActiveTheme.Theme;
-                this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
-                vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer; 
-                connDock.DockBackColor = ThemeManager.getInstance().ActiveTheme.ExtendedPalette.getColor("Tab_Item_Background"); 
-            }
+            if (!ThemeManager.getInstance().ThemingActive) return;
+            base.ApplyTheme();
+            connDock.Theme = ThemeManager.getInstance().ActiveTheme.Theme;
+            vsToolStripExtender = new VisualStudioToolStripExtender(components);
+            vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer; 
+            connDock.DockBackColor = ThemeManager.getInstance().ActiveTheme.ExtendedPalette.getColor("Tab_Item_Background");
         }
 
         private bool _documentHandlersAdded;
@@ -786,6 +783,7 @@ namespace mRemoteNG.UI.Window
 
         private int _firstClickTicks;
         private Rectangle _doubleClickRectangle;
+        
         private void TabController_MouseUp(object sender, MouseEventArgs e)
         {
             try
