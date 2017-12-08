@@ -4,31 +4,32 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using BrightIdeasSoftware;
-using mRemoteNG.App;
-using mRemoteNG.App.Info;
-using mRemoteNG.Config;
 using mRemoteNG.Connection;
-using mRemoteNG.Connection.Protocol;
-using mRemoteNG.Connection.Protocol.RDP;
-using mRemoteNG.Connection.Protocol.VNC;
-using mRemoteNG.Container;
-using mRemoteNG.Themes;
-using mRemoteNG.Tools;
-using mRemoteNG.UI.Forms;
-using mRemoteNG.UI.Forms.Input;
-using mRemoteNG.UI.TaskDialog;
+using mRemoteNG.App;
 using WeifenLuo.WinFormsUI.Docking;
+using mRemoteNG.Config;
+using mRemoteNG.Connection.Protocol.VNC;
+using mRemoteNG.Connection.Protocol.RDP;
+using mRemoteNG.Connection.Protocol;
+using mRemoteNG.UI.Forms;
+using mRemoteNG.UI.TaskDialog;
+using mRemoteNG.App.Info;
+using mRemoteNG.Container;
+using mRemoteNG.Tools;
+using mRemoteNG.UI.Forms.Input;
 using Message = System.Windows.Forms.Message;
 using TabControl = Crownwood.Magic.Controls.TabControl;
 using TabPage = Crownwood.Magic.Controls.TabPage;
+using mRemoteNG.Themes;
 
 namespace mRemoteNG.UI.Window
 {
-	public partial class ConnectionWindow : BaseWindow
+    public partial class ConnectionWindow : BaseWindow
     {
         public TabControl TabController;
         private readonly IConnectionInitiator _connectionInitiator = new ConnectionInitiator();
-        private VisualStudioToolStripExtender vsToolStripExtender;
+        private readonly FrmMain _frmMain = FrmMain.Default;
+        private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender vsToolStripExtender;
         private readonly ToolStripRenderer _toolStripProfessionalRenderer = new ToolStripProfessionalRenderer();
 
         #region Public Methods
@@ -46,6 +47,7 @@ namespace mRemoteNG.UI.Window
             // ReSharper disable once VirtualMemberCallInConstructor
             Text = formText;
             TabText = formText;
+            connDock.DocumentStyle = DocumentStyle.DockingWindow;
         }
 
         private void SetEventHandlers()
@@ -69,12 +71,14 @@ namespace mRemoteNG.UI.Window
             TabController.DragDrop += TabController_DragDrop;
             TabController.DragOver += TabController_DragOver;
             TabController.SelectionChanged += TabController_SelectionChanged;
-            TabController.MouseUp += TabController_MouseUp;
+            //TabController.MouseUp += TabController_MouseUp;
             TabController.PageDragEnd += TabController_PageDragStart;
             TabController.PageDragStart += TabController_PageDragStart;
             TabController.PageDragMove += TabController_PageDragMove;
             TabController.PageDragEnd += TabController_PageDragEnd;
             TabController.PageDragQuit += TabController_PageDragEnd;
+
+        
         }
 
         private void SetContextMenuEventHandlers()
@@ -95,53 +99,59 @@ namespace mRemoteNG.UI.Window
             cmenTabPuttySettings.Click += (sender, args) => ShowPuttySettingsDialog();
         }
 
-        public TabPage AddConnectionTab(ConnectionInfo connectionInfo)
+        public ConnectionTab AddConnectionTab(ConnectionInfo connectionInfo)
         {
             try
             {
-                var nTab = new TabPage
-                {
-                    Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top
-                };
+                ConnectionTab conTab = new ConnectionTab();
 
+                //Set the connection text based on name and preferences
+                string titleText = "";
                 if (Settings.Default.ShowProtocolOnTabs)
-                    nTab.Title = connectionInfo.Protocol + @": ";
-                else
-                    nTab.Title = "";
-
-                nTab.Title += connectionInfo.Name;
-
+                    titleText = connectionInfo.Protocol + ": ";
+                titleText += connectionInfo.Name;
                 if (Settings.Default.ShowLogonInfoOnTabs)
                 {
-                    nTab.Title += @" (";
+                    titleText += @" (";
                     if (connectionInfo.Domain != "")
-                        nTab.Title += connectionInfo.Domain;
+                        titleText += connectionInfo.Domain;
 
                     if (connectionInfo.Username != "")
                     {
                         if (connectionInfo.Domain != "")
-                            nTab.Title += @"\";
-                        nTab.Title += connectionInfo.Username;
+                            titleText += @"\";
+                        titleText += connectionInfo.Username;
                     }
 
-                    nTab.Title += @")";
+                    titleText  += @")";
                 }
+                conTab.TabText = titleText;
+                conTab.TabPageContextMenuStrip = cmenTab;
 
-                nTab.Title = nTab.Title.Replace("&", "&&");
-
+                //Set the connection icon
                 var conIcon = ConnectionIcon.FromString(connectionInfo.Icon);
                 if (conIcon != null)
-                    nTab.Icon = conIcon;
+                    conTab.Icon = conIcon;
 
-                if (Settings.Default.OpenTabsRightOfSelected)
-                    TabController.TabPages.Insert(TabController.SelectedIndex + 1, nTab);
-                else
-                    TabController.TabPages.Add(nTab);
+              
 
-                nTab.Selected = true;
-                _ignoreChangeSelectedTabClick = false;
+                //Show the tab
+                conTab.Show(connDock, DockState.Document);
+                conTab.Focus();
 
-                return nTab;
+
+                //OpenTabsRightOfSelected might be legated, doesnt make sense in MDI
+                // what is _ignoreChangeSelectedTabClick?
+
+                //if (Settings.Default.OpenTabsRightOfSelected)
+                //  TabController.TabPages.Insert(TabController.SelectedIndex + 1, nTab);
+                //else
+                //  TabController.TabPages.Add(nTab);
+                //nTab.Selected = true;
+                //_ignoreChangeSelectedTabClick = false;
+
+                //return nTab;
+                return conTab;
             }
             catch (Exception ex)
             {
@@ -178,12 +188,10 @@ namespace mRemoteNG.UI.Window
             if(ThemeManager.getInstance().ThemingActive)
             {
                 base.ApplyTheme();
+                this.connDock.Theme = ThemeManager.getInstance().ActiveTheme.Theme;
                 this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
-                vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer;
-                vsToolStripExtender.SetStyle(cmenTab, ThemeManager.getInstance().ActiveTheme.Version, ThemeManager.getInstance().ActiveTheme.Theme);
-                TabController.BackColor = ThemeManager.getInstance().ActiveTheme.ExtendedPalette.getColor("Tab_Item_Background");
-                TabController.TextColor = ThemeManager.getInstance().ActiveTheme.ExtendedPalette.getColor("Tab_Item_Foreground");
-                TabController.TextInactiveColor = ThemeManager.getInstance().ActiveTheme.ExtendedPalette.getColor("Tab_Item_Disabled_Foreground");
+                vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer; 
+                connDock.DockBackColor = ThemeManager.getInstance().ActiveTheme.ExtendedPalette.getColor("Tab_Item_Background"); 
             }
         }
 
@@ -861,7 +869,7 @@ namespace mRemoteNG.UI.Window
             {
                 if (m.Msg == NativeMethods.WM_MOUSEACTIVATE)
                 {
-                    var selectedTab = TabController.SelectedTab;
+                 /*   var selectedTab = TabController.SelectedTab;
                     if (selectedTab == null) return;
                     {
                         var tabClientRectangle = selectedTab.RectangleToScreen(selectedTab.ClientRectangle);
@@ -874,7 +882,7 @@ namespace mRemoteNG.UI.Window
                                 return; // Do not pass to base class
                             }
                         }
-                    }
+                    }*/
                 }
             }
             catch (Exception ex)
@@ -921,5 +929,10 @@ namespace mRemoteNG.UI.Window
             interfaceControl?.Protocol.Focus();
         }
         #endregion
+
+        private void ConnectionWindow_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

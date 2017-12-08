@@ -43,7 +43,9 @@ namespace mRemoteNG.Connection.Protocol
 			set
 			{
 				_interfaceControl = value;
-				ConnectionWindow = _interfaceControl.GetContainerControl() as UI.Window.ConnectionWindow;
+                // TODO: do something better here...
+                // This is ugly
+				ConnectionWindow = _interfaceControl.Parent.Parent.Parent.Parent.Parent as UI.Window.ConnectionWindow;
 			}
 		}
 

@@ -8,8 +8,6 @@ using mRemoteNG.Messages;
 using mRemoteNG.UI.Forms;
 using mRemoteNG.UI.Panels;
 using mRemoteNG.UI.Window;
-using TabPage = Crownwood.Magic.Controls.TabPage;
-
 
 namespace mRemoteNG.Connection
 {
@@ -54,8 +52,8 @@ namespace mRemoteNG.Connection
             connectionWindow?.Focus();
             var findForm = (ConnectionWindow)interfaceControl.FindForm();
             findForm?.Show(FrmMain.Default.pnlDock);
-            var tabPage = (TabPage)interfaceControl.Parent;
-            tabPage.Selected = true;
+            //var tabPage = (TabPage)interfaceControl.Parent;
+            //tabPage.Selected = true;
             return true;
         }
 
@@ -139,6 +137,8 @@ namespace mRemoteNG.Connection
             {
                 var window = Runtime.WindowList[i] as ConnectionWindow;
                 var connectionWindow = window;
+                // TODO: with this commented out, we're not actually doing anything here...
+                /*
                 if (connectionWindow?.TabController == null) continue;
                 foreach (TabPage t in connectionWindow.TabController.TabPages)
                 {
@@ -149,6 +149,7 @@ namespace mRemoteNG.Connection
                         return ic;
                     }
                 }
+                */
             }
             return null;
         }
@@ -192,10 +193,13 @@ namespace mRemoteNG.Connection
 
             var extT = Runtime.ExternalToolsService.GetExtAppByName(connectionInfo.ExtApp);
 
-            if(extT == null) return connectionContainer;
+            //TODO with the extT.Icon code commented out, we'll always be returning connectionContainer as is... Review and fix accordingly...
+            if (extT == null) return connectionContainer;
 
+            /*
             if (extT.Icon != null)
                 ((TabPage)connectionContainer).Icon = extT.Icon;
+            */
 
             return connectionContainer;
         }
