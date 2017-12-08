@@ -200,12 +200,10 @@ namespace mRemoteNG.UI.Forms
         //Theming support
         private void SetSchema()
         {
-            if (_themeManager.ThemingActive)
-            {
-                // Persist settings when rebuilding UI
-                this.pnlDock.Theme = _themeManager.ActiveTheme.Theme;
-                ApplyTheme();
-            }
+            if (!_themeManager.ThemingActive) return;
+            // Persist settings when rebuilding UI
+            pnlDock.Theme = _themeManager.ActiveTheme.Theme;
+            ApplyTheme();
         }
         private void ApplyTheme()
 		{
