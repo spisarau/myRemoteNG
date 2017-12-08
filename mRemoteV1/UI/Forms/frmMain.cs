@@ -75,8 +75,8 @@ namespace mRemoteNG.UI.Forms
 
         public bool AreWeUsingSqlServerForSavingConnections
 		{
-			get => _usingSqlServer;
-            set
+			get { return _usingSqlServer; }
+			set
 			{
 				if (_usingSqlServer == value)
 				{
@@ -89,8 +89,8 @@ namespace mRemoteNG.UI.Forms
 		
         public string ConnectionsFileName
 		{
-			get => _connectionsFileName;
-            set
+			get { return _connectionsFileName; }
+			set
 			{
 				if (_connectionsFileName == value)
 				{
@@ -103,8 +103,8 @@ namespace mRemoteNG.UI.Forms
 		
         public bool ShowFullPathInTitle
 		{
-			get => _showFullPathInTitle;
-            set
+			get { return _showFullPathInTitle; }
+			set
 			{
 				if (_showFullPathInTitle == value)
 				{
@@ -117,8 +117,8 @@ namespace mRemoteNG.UI.Forms
 		
         public ConnectionInfo SelectedConnection
 		{
-			get => _selectedConnection;
-            set
+			get { return _selectedConnection; }
+			set
 			{
 				if (_selectedConnection == value)
 				{
@@ -270,8 +270,9 @@ namespace mRemoteNG.UI.Forms
 			    var openConnections = 0;
                 foreach (BaseWindow window in Runtime.WindowList)
                 {
-                    if (window is ConnectionWindow connectionWindow)
-                        openConnections = openConnections + connectionWindow.TabController.TabPages.Count;
+                    var connectionWindow = window as ConnectionWindow;
+                    if (connectionWindow != null)
+						openConnections = openConnections + connectionWindow.TabController.TabPages.Count;
                 }
 
 			    if (openConnections > 0 && (Settings.Default.ConfirmCloseConnection == (int)ConfirmCloseEnum.All | (Settings.Default.ConfirmCloseConnection == (int)ConfirmCloseEnum.Multiple & openConnections > 1) || Settings.Default.ConfirmCloseConnection == (int)ConfirmCloseEnum.Exit))
@@ -554,8 +555,14 @@ namespace mRemoteNG.UI.Forms
         public delegate void ClipboardchangeEventHandler();
         public static event ClipboardchangeEventHandler ClipboardChanged
         {
-            add => _clipboardChangedEvent = (ClipboardchangeEventHandler)Delegate.Combine(_clipboardChangedEvent, value);
-            remove => _clipboardChangedEvent = (ClipboardchangeEventHandler)Delegate.Remove(_clipboardChangedEvent, value);
+            add
+            {
+                _clipboardChangedEvent = (ClipboardchangeEventHandler)Delegate.Combine(_clipboardChangedEvent, value);
+            }
+            remove
+            {
+                _clipboardChangedEvent = (ClipboardchangeEventHandler)Delegate.Remove(_clipboardChangedEvent, value);
+            }
         }
         #endregion
 
